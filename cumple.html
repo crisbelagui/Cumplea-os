@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Cumpleaños, Mi Amor 🎂❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --rojo:        #e50914;
+      --negro:       #141414;
+      --gris-oscuro: #1a1a1a;
+      --gris-medio:  #2d2d2d;
+      --gris-claro:  #757575;
+      --blanco:      #ffffff;
+      --crema:       #e8d5b7;
+      --dorado:      #c9a84c;
+      --rosa:        #ff6b9d;
+      --font-titulo: 'Playfair Display', serif;
+      --font-cuerpo: 'DM Sans', sans-serif;
+      --t:           0.35s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--negro); color: var(--blanco); font-family: var(--font-cuerpo); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--negro); }
+    ::-webkit-scrollbar-thumb { background: var(--rojo); border-radius: 3px; }
+
+    /* PANTALLA DE PERFIL */
+    #pantalla-perfil {
+      position: fixed; inset: 0; z-index: 1000;
+      background: var(--negro);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.2rem;
+      animation: fadeIn 0.8s ease;
+    }
+    .perfil-logo {
+      font-family: var(--font-titulo); font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--rojo); font-style: italic; letter-spacing: 0.04em;
+    }
+    .perfil-cumple { text-align: center; animation: fadeIn 0.6s ease 0.4s both; }
+    .perfil-cumple-num {
+      font-family: var(--font-titulo); font-size: clamp(3.5rem, 10vw, 6rem);
+      color: var(--dorado); line-height: 1; display: block;
+      animation: latir 2s ease infinite;
+    }
+    .perfil-cumple-text {
+      font-size: 0.85rem; color: var(--gris-claro); letter-spacing: 0.2em; text-transform: uppercase;
+      display: block; margin-top: 0.3rem;
+    }
+    .perfil-subtitulo {
+      font-size: clamp(0.8rem, 2vw, 0.95rem); color: var(--gris-claro);
+      letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .perfil-avatares { display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center; }
+    .perfil-card {
+      display: flex; flex-direction: column; align-items: center; gap: 0.7rem;
+      cursor: pointer; transition: transform var(--t);
+    }
+    .perfil-card:hover { transform: scale(1.1); }
+    .perfil-card:hover .perfil-avatar { border-color: var(--blanco); }
+    .perfil-avatar {
+      width: 100px; height: 100px; border-radius: 6px;
+      border: 3px solid transparent; transition: border-color var(--t);
+      background: var(--gris-medio);
+      display: flex; align-items: center; justify-content: center; font-size: 3rem;
+      overflow: hidden;
+    }
+    .perfil-nombre { font-size: 0.88rem; color: var(--gris-claro); transition: color var(--t); }
+    .perfil-card:hover .perfil-nombre { color: var(--blanco); }
+    .perfil-btn {
+      background: transparent; color: var(--gris-claro);
+      border: 1px solid var(--gris-claro); padding: 0.6rem 2.5rem;
+      font-family: var(--font-cuerpo); font-size: 0.82rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      cursor: pointer; border-radius: 3px; transition: all var(--t);
+    }
+    .perfil-btn:hover { color: var(--blanco); border-color: var(--blanco); }
+
+    /* GLOBITOS */
+    .globito {
+      position: fixed; bottom: -60px; font-size: 1.8rem;
+      animation: subirGlobo linear infinite;
+      pointer-events: none; z-index: 999; opacity: 0.75;
+    }
+    @keyframes subirGlobo {
+      0%   { transform: translateY(0) rotate(-5deg); opacity: 0; }
+      10%  { opacity: 0.75; }
+      50%  { transform: translateY(-50vh) rotate(5deg); }
+      90%  { opacity: 0.75; }
+      100% { transform: translateY(-110vh) rotate(-5deg); opacity: 0; }
+    }
+
+    /* NAVBAR */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.1rem 4%;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
+      transition: background 0.4s;
+    }
+    #navbar.scrolled { background: rgba(20,20,20,0.97); box-shadow: 0 2px 18px rgba(0,0,0,0.5); }
+    .nav-logo { font-family: var(--font-titulo); font-size: 1.5rem; color: var(--rojo); font-style: italic; }
+    .nav-links { display: flex; gap: 1.4rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.83rem; letter-spacing: 0.05em; transition: color var(--t); }
+    .nav-links a:hover { color: var(--blanco); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* HERO */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: flex-end; padding: 0 4% 8%; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1600&q=80');
+      background-size: cover; background-position: center 30%;
+      animation: heroZoom 22s ease infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.04); }
+      to   { transform: scale(1.11); }
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.25) 65%, transparent 100%),
+        linear-gradient(to top, rgba(0,0,0,0.92) 0%, transparent 45%);
+    }
+    .hero-contenido { position: relative; z-index: 2; max-width: 580px; }
+    .hero-badge {
+      display: inline-block; background: var(--rojo); color: var(--blanco);
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.28rem 0.8rem; border-radius: 2px; margin-bottom: 0.9rem;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+    .hero-titulo {
+      font-family: var(--font-titulo);
+      font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 700; line-height: 1.05;
+      margin-bottom: 1.1rem; animation: fadeUp 0.6s ease 0.5s both;
+    }
+    .hero-titulo span { display: block; color: var(--crema); font-style: italic; }
+    .hero-meta {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem;
+      animation: fadeUp 0.6s ease 0.65s both;
+    }
+    .estrellas { color: var(--dorado); font-size: 0.88rem; letter-spacing: 2px; }
+    .meta-text { font-size: 0.78rem; color: var(--gris-claro); }
+    .hero-descripcion {
+      font-size: clamp(0.88rem, 2vw, 1.02rem); color: rgba(255,255,255,0.85);
+      line-height: 1.75; margin-bottom: 1.8rem; max-width: 460px;
+      animation: fadeUp 0.6s ease 0.8s both;
+    }
+    .hero-botones { display: flex; gap: 0.9rem; flex-wrap: wrap; animation: fadeUp 0.6s ease 1s both; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.72rem 1.7rem; border-radius: 4px;
+      font-family: var(--font-cuerpo); font-size: 0.93rem; font-weight: 500;
+      cursor: pointer; border: none; transition: all var(--t); text-decoration: none;
+    }
+    .btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .btn-primary { background: var(--blanco); color: var(--negro); }
+    .btn-primary:hover { background: rgba(255,255,255,0.85); transform: scale(1.04); }
+    .btn-secondary { background: rgba(109,109,110,0.65); color: var(--blanco); }
+    .btn-secondary:hover { background: rgba(109,109,110,0.9); transform: scale(1.04); }
+
+    /* SECCIONES */
+    section { padding: 3rem 4%; }
+    .seccion-titulo {
+      font-family: var(--font-titulo); font-size: clamp(1.15rem, 3vw, 1.55rem);
+      color: var(--blanco); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .seccion-titulo::after {
+      content: ''; height: 1px; flex: 1;
+      background: linear-gradient(to right, var(--gris-medio), transparent);
+    }
+
+    /* MOMENTOS */
+    #momentos { padding-bottom: 4rem; }
+    .momentos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    @media (max-width: 768px) {
+      .momentos-grid { grid-template-columns: 1fr; gap: 1rem; }
+    }
+    .momento-card {
+      background: var(--gris-oscuro); border-radius: 8px; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer; position: relative;
+    }
+    .momento-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.65);
+    }
+    .momento-foto-wrap {
+      width: 100%; height: 200px; position: relative; overflow: hidden;
+      background: var(--gris-medio);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .momento-foto {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+    }
+    .momento-card:hover .momento-foto { transform: scale(1.07); }
+    .momento-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.5rem; background: var(--gris-medio); cursor: pointer;
+      transition: background var(--t);
+    }
+    .momento-placeholder:hover { background: #333; }
+    .momento-placeholder.oculto { display: none; }
+    .placeholder-icono { font-size: 2.2rem; opacity: 0.6; }
+    .placeholder-texto { font-size: 0.78rem; color: var(--gris-claro); text-align: center; line-height: 1.4; }
+    .foto-input { display: none; }
+    .cambiar-foto-btn {
+      position: absolute; bottom: 8px; right: 8px;
+      background: rgba(0,0,0,0.75); color: var(--blanco);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 4px;
+      padding: 0.3rem 0.65rem; font-size: 0.72rem; cursor: pointer;
+      opacity: 0; transition: opacity var(--t);
+      font-family: var(--font-cuerpo);
+    }
+    .momento-card:hover .cambiar-foto-btn { opacity: 1; }
+    /* En móvil, mostrar siempre el botón */
+    @media (hover: none) {
+      .cambiar-foto-btn { opacity: 1; }
+    }
+    .momento-info { padding: 1rem; }
+    .momento-titulo {
+      font-family: var(--font-titulo); font-size: 1rem; color: var(--blanco);
+      margin-bottom: 0.4rem; outline: none;
+      border-bottom: 1px solid transparent; transition: border-color var(--t);
+    }
+    .momento-titulo:focus { border-bottom-color: var(--rojo); }
+    .momento-desc {
+      font-size: 0.78rem; color: var(--gris-claro); line-height: 1.5;
+      outline: none; border-bottom: 1px solid transparent; transition: border-color var(--t);
+    }
+    .momento-desc:focus { border-bottom-color: var(--rojo); }
+    .editable-hint {
+      font-size: 0.68rem; color: rgba(229,9,20,0.6); margin-top: 0.4rem;
+      opacity: 0; transition: opacity var(--t);
+    }
+    .momento-card:hover .editable-hint { opacity: 1; }
+    .momento-num {
+      position: absolute; top: 10px; left: 10px; z-index: 2;
+      background: var(--rojo); color: var(--blanco);
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 500;
+    }
+
+    /* CUMPLEAÑOS */
+    #cumple {
+      background: var(--gris-oscuro);
+      position: relative; overflow: hidden; text-align: center;
+      padding: 4rem 4%;
+    }
+    .cumple-num-grande {
+      font-family: var(--font-titulo);
+      font-size: clamp(5rem, 18vw, 12rem);
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(201,168,76,0.3);
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none; line-height: 1;
+    }
+    .cumple-contenido { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+    .cumple-emoji { font-size: 3.5rem; display: block; margin-bottom: 1rem; animation: latir 1.4s ease infinite; }
+    .cumple-titulo {
+      font-family: var(--font-titulo); font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--crema); font-style: italic; margin-bottom: 1rem; line-height: 1.2;
+    }
+    .cumple-titulo .anios { color: var(--dorado); }
+    .cumple-subtitulo {
+      font-size: clamp(0.9rem, 2vw, 1.05rem); color: rgba(255,255,255,0.75);
+      line-height: 1.7; max-width: 480px; margin: 0 auto 2rem;
+    }
+    .cumple-timeline {
+      display: flex; align-items: center; justify-content: center; gap: 0; margin: 2rem 0;
+      overflow-x: auto; padding-bottom: 0.5rem;
+    }
+    .cumple-timeline::-webkit-scrollbar { display: none; }
+    .tl-item {
+      display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+      flex: 0 0 auto;
+    }
+    .tl-dot {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--gris-medio);
+      border: 2px solid var(--gris-claro); transition: all 0.3s ease;
+    }
+    .tl-dot.activo { background: var(--dorado); border-color: var(--dorado); transform: scale(1.5); }
+    .tl-dot.pasado { background: var(--rojo); border-color: var(--rojo); }
+    .tl-linea { width: 28px; height: 2px; background: var(--gris-medio); margin-top: -8px; flex: 0 0 auto; }
+    .tl-linea.pasada { background: var(--rojo); }
+    .tl-anio { font-size: 0.62rem; color: var(--gris-claro); }
+    .tl-anio.activo { color: var(--dorado); font-weight: 500; }
+
+    /* FRASES */
+    #frases { background: var(--negro); position: relative; overflow: hidden; }
+    #frases::before {
+      content: '❝'; position: absolute; top: -1.5rem; left: 2%;
+      font-size: 14rem; color: rgba(229,9,20,0.05);
+      font-family: Georgia, serif; pointer-events: none; line-height: 1;
+    }
+    .frases-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem; position: relative; z-index: 1;
+    }
+    .frase-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-left: 3px solid var(--rojo);
+      border-radius: 0 6px 6px 0; padding: 1.4rem;
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s;
+    }
+    .frase-card.visible { opacity: 1; transform: translateY(0); }
+    .frase-card:hover { background: rgba(229,9,20,0.06); }
+    .frase-texto {
+      font-family: var(--font-titulo); font-size: clamp(0.93rem, 2vw, 1.08rem);
+      font-style: italic; color: var(--crema); line-height: 1.6; margin-bottom: 0.75rem;
+    }
+    .frase-autor { font-size: 0.72rem; color: var(--rojo); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* CARTA */
+    #carta { position: relative; }
+    .carta-contenedor {
+      max-width: 720px; margin: 0 auto;
+      background: var(--gris-oscuro);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 8px; padding: clamp(2rem, 5vw, 3.5rem);
+      position: relative; overflow: hidden;
+    }
+    .carta-contenedor::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(to right, var(--rojo), var(--dorado), var(--rojo));
+    }
+    .carta-icono { font-size: 2.4rem; text-align: center; display: block; margin-bottom: 1.4rem; animation: latir 1.5s ease infinite; }
+    .carta-titulo { font-family: var(--font-titulo); font-size: clamp(1.4rem, 4vw, 2rem); font-style: italic; text-align: center; color: var(--crema); margin-bottom: 2rem; }
+    .carta-cuerpo { font-size: clamp(0.88rem, 2vw, 1rem); color: rgba(255,255,255,0.82); line-height: 1.9; }
+    .carta-cuerpo p { margin-bottom: 1.1rem; }
+    .carta-firma { font-family: var(--font-titulo); font-style: italic; font-size: 1.15rem; color: var(--dorado); text-align: right; margin-top: 2rem; }
+
+    /* FOOTER */
+    footer {
+      background: var(--negro); border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 2.5rem 4%; text-align: center;
+    }
+    .footer-logo { font-family: var(--font-titulo); font-size: 1.35rem; color: var(--rojo); font-style: italic; margin-bottom: 0.7rem; }
+    .footer-mensaje { font-size: 0.83rem; color: var(--gris-claro); line-height: 1.6; }
+    .footer-fecha { margin-top: 1.4rem; font-size: 0.72rem; color: rgba(117,117,117,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* MODAL */
+    #modal {
+      display: none; position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0.93);
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    #modal.activo { display: flex; animation: fadeIn 0.3s ease; }
+    .modal-contenido {
+      background: var(--gris-oscuro); border-radius: 10px; padding: 2.5rem;
+      max-width: 560px; width: 100%; text-align: center; position: relative;
+      border: 1px solid rgba(201,168,76,0.2);
+      animation: scaleIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .modal-cerrar {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none; color: var(--gris-claro);
+      font-size: 1.4rem; cursor: pointer; transition: color var(--t);
+    }
+    .modal-cerrar:hover { color: var(--blanco); }
+    .modal-corazones { font-size: 3rem; display: block; margin-bottom: 1.1rem; animation: latir 1.2s ease infinite; }
+    .modal-titulo { font-family: var(--font-titulo); font-size: 1.75rem; font-style: italic; color: var(--crema); margin-bottom: 0.9rem; }
+    .modal-texto { font-size: 0.97rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 1.4rem; }
+    .modal-progreso { width: 100%; height: 3px; background: var(--gris-medio); border-radius: 2px; overflow: hidden; margin-top: 0.8rem; }
+    .modal-barra { height: 100%; background: linear-gradient(to right, var(--rojo), var(--dorado)); width: 0%; border-radius: 2px; transition: width 4s ease; }
+
+    /* CONFETI */
+    .confeti {
+      position: fixed; top: -10px; pointer-events: none; z-index: 998;
+      animation: caerConfeti linear forwards;
+      border-radius: 2px;
+    }
+    @keyframes caerConfeti {
+      0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* PÉTALOS */
+    .petalo {
+      position: fixed; pointer-events: none; z-index: 997;
+      animation: caerPetalo linear infinite;
+    }
+    @keyframes caerPetalo {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.45; }
+      90%  { opacity: 0.45; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* BOTÓN MÚSICA */
+    #musica-btn {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 500;
+      background: rgba(20,20,20,0.9); border: 1px solid rgba(255,255,255,0.14);
+      color: var(--blanco); width: 46px; height: 46px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: all var(--t);
+    }
+    #musica-btn:hover { background: var(--rojo); border-color: var(--rojo); }
+
+    /* ANIMACIONES */
+    @keyframes fadeIn    { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp    { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn   { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes latir     { 0%,100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+    @keyframes slideInUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    @keyframes slideOutDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
+
+    /* PÁGINA DE MOMENTO */
+    #momento-pagina {
+      position: fixed; inset: 0; z-index: 3000;
+      background: var(--negro);
+      display: none; flex-direction: column;
+      overflow-y: auto;
+      animation: slideInUp 0.45s cubic-bezier(0.22,1,0.36,1);
+    }
+    #momento-pagina.activo { display: flex; }
+    #momento-pagina.saliendo { animation: slideOutDown 0.35s ease forwards; }
+
+    .mp-header {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 4%;
+      background: rgba(20,20,20,0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mp-volver {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: none; border: none; color: var(--blanco);
+      font-family: var(--font-cuerpo); font-size: 0.88rem;
+      cursor: pointer; letter-spacing: 0.04em; transition: color var(--t);
+    }
+    .mp-volver:hover { color: var(--rojo); }
+    .mp-volver svg { width: 18px; height: 18px; }
+
+    .mp-num-badge {
+      background: var(--rojo); color: var(--blanco);
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.25rem 0.85rem; border-radius: 2px;
+    }
+
+    .mp-logo { font-family: var(--font-titulo); font-size: 1.1rem; color: var(--rojo); font-style: italic; }
+
+    .mp-foto-wrap {
+      width: 100%; max-height: 65vh; overflow: hidden;
+      position: relative; flex-shrink: 0;
+    }
+    .mp-foto {
+      width: 100%; height: 65vh; object-fit: cover; display: block;
+      animation: fadeIn 0.5s ease 0.2s both;
+    }
+    .mp-foto-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+    }
+    .mp-foto-titulo {
+      position: absolute; bottom: 2rem; left: 4%; right: 4%;
+      font-family: var(--font-titulo); font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--blanco); font-style: italic; line-height: 1.1;
+      animation: fadeUp 0.5s ease 0.35s both;
+    }
+
+    .mp-cuerpo {
+      max-width: 820px; margin: 0 auto; padding: 3rem 4% 5rem;
+      animation: fadeUp 0.5s ease 0.4s both;
+    }
+    .mp-descripcion {
+      font-size: clamp(1rem, 2.5vw, 1.2rem); color: rgba(255,255,255,0.8);
+      line-height: 1.85; margin-bottom: 2.5rem;
+      border-left: 3px solid var(--rojo); padding-left: 1.4rem;
+    }
+    .mp-detalle-fila {
+      display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .mp-chip {
+      background: var(--gris-oscuro); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 0.35rem 1rem;
+      font-size: 0.78rem; color: var(--gris-claro);
+    }
+    .mp-chip span { color: var(--dorado); }
+
+    .mp-cambiar-foto-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; border: 1px solid rgba(255,255,255,0.2);
+      color: var(--blanco); padding: 0.65rem 1.5rem;
+      border-radius: 4px; font-family: var(--font-cuerpo); font-size: 0.85rem;
+      cursor: pointer; transition: all var(--t);
+    }
+    .mp-cambiar-foto-btn:hover { border-color: var(--rojo); color: var(--rojo); }
+  </style>
+</head>
+<body>
+
+
+
+
+
+<!-- PANTALLA DE PERFIL -->
+<div id="pantalla-perfil">
+  <p class="perfil-logo">Feliz cumpleaños mi vida</p>
+  <div class="perfil-cumple">
+    <span class="perfil-cumple-num">28</span>
+    <span class="perfil-cumple-text">años de ser increíble ✨</span>
+  </div>
+  <p class="perfil-subtitulo">¿Quién está viendo?</p>
+  <div class="perfil-avatares">
+    <div class="perfil-card" onclick="entrar()">
+      <div class="perfil-avatar">🌸</div>
+      <span class="perfil-nombre">Cris</span>
+    </div>
+    <div class="perfil-card" onclick="entrar()">
+      <div class="perfil-avatar">🎂</div>
+      <span class="perfil-nombre">Roberto</span>
+    </div>
+  </div>
+  <button class="perfil-btn" onclick="entrar()">Descubre la sorpresa</button>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">NuestroAmor</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Inicio</a></li>
+    <li><a href="#momentos">Momentos</a></li>
+    <li><a href="#cumple">Cumpleaños</a></li>
+    <li><a href="#frases">Frases</a></li>
+    <li><a href="#carta">Carta</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-contenido">
+    <span class="hero-badge">🎂 Edición especial de cumpleaños</span>
+    <h1 class="hero-titulo">
+      Feliz Cumpleaños<br>
+      <span>Mi amor eterno</span>
+    </h1>
+    <div class="hero-meta">
+      <span class="estrellas">★★★★★</span>
+      <span class="meta-text">Romance · Para siempre · Exclusivo para ti</span>
+    </div>
+    <p class="hero-descripcion">
+      Hoy el mundo celebra uno de sus días más bonitos: el día que llegaste a él. Y yo celebro algo más: el privilegio de tenerte en mi vida.
+    </p>
+    <div class="hero-botones">
+      <button class="btn btn-primary" onclick="abrirModal()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Reproducir
+      </button>
+      <button class="btn btn-secondary" onclick="document.getElementById('carta').scrollIntoView({behavior:'smooth'})">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        Más información
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <h2 class="seccion-titulo">Nuestros Momentos</h2>
+  <div class="momentos-grid">
+
+    <!-- TARJETA 1 -->
+    <div class="momento-card" onclick="abrirMomento(0)">
+      <div class="momento-foto-wrap">
+        <img class="momento-foto" id="foto-0"
+             src="img\foto1.png"
+             alt="Momento 1" />
+        <div class="momento-placeholder oculto" id="placeholder-0">
+          <span class="placeholder-texto">Toca para ver<br>este momento</span>
+        </div>
+        <input type="file" accept="image/*" class="foto-input" id="input-0" onchange="cargarFoto(0,this)" />
+      </div>
+      <div class="momento-info">
+        <p class="momento-titulo" id="titulo-0" contenteditable="true" spellcheck="false" onclick="event.stopPropagation()">Momentos juntos</p>
+        <p class="momento-desc"  id="desc-0" contenteditable="true" spellcheck="false" onclick="event.stopPropagation()"> Cada momento que pasamos juntos se convierte en algo mágico</p>
+      </div>
+    </div>
+
+    <!-- TARJETA 2 -->
+    <div class="momento-card" onclick="abrirMomento(1)">
+      <div class="momento-foto-wrap">
+        <img class="momento-foto" id="foto-1"
+             src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=500&q=80"
+             alt="Momento 2" />
+        <div class="momento-placeholder oculto" id="placeholder-1">
+          <span class="placeholder-texto">Toca para ver<br>este momento</span>
+        </div>
+        <input type="file" accept="image/*" class="foto-input" id="input-1" onchange="cargarFoto(1,this)" />
+      </div>
+      <div class="momento-info">
+        <p class="momento-titulo" id="titulo-1" contenteditable="true" spellcheck="false" onclick="event.stopPropagation()">Lo que mas amo de ti</p>
+        <p class="momento-desc"  id="desc-1" contenteditable="true" spellcheck="false" onclick="event.stopPropagation()">Amo tu forma de ser, tu paciencia, y cómo logras hacerme sentir tranquila incluso en los días más difíciles.</p>      
+      </div>
+    </div>
+
+    <!-- TARJETA 3 -->
+    <div class="momento-card" onclick="abrirMomento(2)">
+      <div class="momento-foto-wrap">
+        <img class="momento-foto" id="foto-2"
+             src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&q=80"
+             alt="Momento 3" />
+        <div class="momento-placeholder oculto" id="placeholder-2">
+          <span class="placeholder-texto">Toca para ver<br>este momento</span>
+        </div>
+        <input type="file" accept="image/*" class="foto-input" id="input-2" onchange="cargarFoto(2,this)" />
+      </div>
+      <div class="momento-info">
+        <p class="momento-titulo" id="titulo-2" contenteditable="true" spellcheck="false" onclick="event.stopPropagation()">Deseos para ti</p>
+        <p class="momento-desc"  id="desc-2" contenteditable="true" spellcheck="false" onclick="event.stopPropagation()">Solo quiero verte feliz, hoy y en cada día que viene.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECCIÓN CUMPLEAÑOS -->
+<section id="cumple">
+  <span class="cumple-num-grande" aria-hidden="true">28</span>
+  <div class="cumple-contenido">
+    <span class="cumple-emoji">🎂</span>
+    <h2 class="cumple-titulo">
+      Hoy cumples <span class="anios">28 años</span><br>
+      de hacer el mundo más bonito
+    </h2>
+    <p class="cumple-subtitulo">
+      Cada año que pasa contigo es un capítulo que no cambiaría por nada. Eres la persona con quien quiero seguir escribiendo esta historia.
+    </p>
+    <div class="cumple-timeline" id="timeline"></div>
+    <button class="btn btn-primary" onclick="lanzarConfeti()" style="margin-top:1rem;">
+      🎉 ¡Celebrar!
+    </button>
+  </div>
+</section>
+
+<!-- FRASES -->
+<section id="frases">
+  <h2 class="seccion-titulo">Lo que siento por ti</h2>
+  <div class="frases-grid">
+    <div class="frase-card">
+      <p class="frase-texto">"Eres la persona con quien quiero molestarme en envejecer. Hoy, más que nunca."</p>
+      <span class="frase-autor">— Siempre tuya</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"Tu cumpleaños me recuerda lo afortunado/a que soy de tenerte en mi vida."</p>
+      <span class="frase-autor">— Con todo mi corazón</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"Que cumplas muchos más, pero que los vivas todos a mi lado."</p>
+      <span class="frase-autor">— Para ti, hoy y siempre</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"No existe regalo que iguale lo que tú me das: tu amor, tu risa, tu presencia."</p>
+      <span class="frase-autor">— Solo para ti</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"Gracias por existir. Gracias por ser tú."</p>
+      <span class="frase-autor">— Con amor eterno</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"Cada año que cumples es uno más que tenemos juntos, y eso es lo mejor del mundo."</p>
+      <span class="frase-autor">— Hoy y siempre</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"Que este nuevo año te regale muchos sueños cumplidos, y ojalá yo pueda estar contigo en cada uno de ellos."</p>
+      <span class="frase-autor">— Por siempre tu</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"Feliz cumpleaños, amor. Gracias por llegar a mi vida y hacerla tan especial con cada momento a tu lado."</p>
+      <span class="frase-autor">— Con mucho cariño</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"Hoy es tu día, pero el regalo es mío por tenerte a mi lado. Gracias por tanto, mi amor."</p>
+      <span class="frase-autor">— Con todo mi amor</span>
+    </div>
+    <div class="frase-card">
+      <p class="frase-texto">"Que nunca te falte una razón para sonreír, y ojalá muchas de esas razones sean conmigo."</p>
+      <span class="frase-autor">— Mi corazón es tuyo</span>
+    </div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section id="carta">
+  <h2 class="seccion-titulo">Mi carta para ti</h2>
+  <div class="carta-contenedor">
+    <h3 class="carta-titulo">Para ti, en tu día más especial</h3>
+    <div class="carta-cuerpo">
+      <p>Hoy es un día especial… no solo porque lo diga el calendario, sino porque el mundo tiene la suerte de celebrar que existes. Y yo tengo la suerte más grande de todas: quererte.</p>
+      <p>Hay personas que llegan a tu vida y lo cambian todo sin hacer mucho ruido. Tú fuiste eso para mí. Antes de conocerte, todo era normal… pero contigo todo se siente distinto, más bonito, más real.</p>
+      <p>Me encanta cómo te ríes cuando algo te toma por sorpresa, cómo te concentras cuando algo te importa, y esa forma en la que me miras cuando crees que no me doy cuenta… pero siempre me doy cuenta.</p>
+      <p>En tu cumpleaños solo quiero que seas muy feliz. Verte feliz es lo que más me importa. Y cada año que pasa, siento que aprendo a quererte un poquito mejor.</p>
+      <p>Feliz cumpleaños, mi amor. Esto es solo una parte de todo lo que siento… lo demás lo seguimos escribiendo juntos, día a día. 💙</p>
+    </div>
+    <p class="carta-firma">Con todo mi amor, siempre tuya ❤️</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">NuestroAmor</p>
+  <p class="footer-mensaje">
+    Hecha con amor, solo para ti. Porque mereces tu propia historia.<br>
+  </p>
+  <p class="footer-fecha">© 2025 · Feliz Cumpleaños</p>
+</footer>
+
+<!-- PÁGINA DE MOMENTO -->
+<div id="momento-pagina" role="dialog" aria-modal="true">
+  <div class="mp-header">
+    <button class="mp-volver" onclick="cerrarMomento()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Volver
+    </button>
+    <p class="mp-logo">NuestroAmor</p>
+    <span class="mp-num-badge" id="mp-badge">Momento 1</span>
+  </div>
+
+  <div class="mp-foto-wrap">
+    <img class="mp-foto" id="mp-foto" src="" alt="Momento" />
+    <div class="mp-foto-overlay"></div>
+    <h2 class="mp-foto-titulo" id="mp-titulo-overlay"></h2>
+  </div>
+
+  <div class="mp-cuerpo">
+    <p class="mp-descripcion" id="mp-desc"></p>
+    <div class="mp-detalle-fila">
+      <span class="mp-chip">📅 <span>Nuestro recuerdo especial</span></span>
+      <span class="mp-chip">❤️ <span>Para siempre</span></span>
+      <span class="mp-chip">✨ <span>Momento único</span></span>
+    </div>
+    <button class="mp-cambiar-foto-btn" onclick="triggerUploadDesdeModal()">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-2 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+      Cambiar foto de este momento
+    </button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" role="dialog" aria-modal="true">
+  <div class="modal-contenido">
+    <button class="modal-cerrar" onclick="cerrarModal()">✕</button>
+    <span class="modal-corazones">🎂</span>
+    <h2 class="modal-titulo">Feliz Cumpleaños, Mi Amor</h2>
+    <p class="modal-texto">
+      🎬 Reproduciendo: <em>"El mejor amor del mundo"</em><br><br>
+      Esta no es una película de Netflix. Es algo infinitamente mejor: es nuestra historia real, el amor más bonito que existe — el nuestro.
+    </p>
+    <div class="modal-progreso">
+      <div class="modal-barra" id="barra-progreso"></div>
+    </div>
+    <p style="font-size:0.73rem;color:var(--gris-claro);margin-top:0.6rem;letter-spacing:0.05em;">
+      ▶ Reproduciendo · Para siempre · ∞
+    </p>
+  </div>
+</div>
+
+<!-- BOTÓN MÚSICA -->
+<button id="musica-btn" onclick="toggleMusica()" title="Música">🎵</button>
+
+<!-- Contenedor pétalos -->
+<div id="petalos"></div>
+
+<script>
+  /* -------------------------------------------------
+     VARIABLES GLOBALES
+  ------------------------------------------------- */
+  var globInterval = null;
+  var audio = null;
+  var musicOn = false;
+  var MUSICA_ACTIVADA = false; // ✏️ Cambia a true y pon tu URL abajo
+  var audioSrc = '';            // ✏️ URL de tu MP3
+
+  /* -------------------------------------------------
+     1. ENTRAR AL SITIO — CORREGIDO (sin recursión)
+  ------------------------------------------------- */
+  function entrar() {
+    // Detener globitos
+    if (globInterval) {
+      clearInterval(globInterval);
+      globInterval = null;
+    }
+    document.querySelectorAll('.globito').forEach(function(g) { g.remove(); });
+
+    var p = document.getElementById('pantalla-perfil');
+    p.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    p.style.opacity = '0';
+    p.style.transform = 'scale(1.05)';
+    setTimeout(function() {
+      p.style.display = 'none';
+      lanzarConfeti();
+    }, 700);
+  }
+
+  /* -------------------------------------------------
+     2. NAVBAR SCROLL
+  ------------------------------------------------- */
+  window.addEventListener('scroll', function() {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  /* -------------------------------------------------
+     3. UPLOAD DE FOTOS — CORREGIDO
+     El click en la wrap llama triggerUpload, pero el
+     botón "Cambiar foto" también lo hace y necesita
+     stopPropagation para no disparar doble.
+  ------------------------------------------------- */
+  function triggerUpload(idx) {
+    document.getElementById('input-' + idx).click();
+  }
+
+  /* -------------------------------------------------
+     PÁGINA DE MOMENTO — ABRIR / CERRAR
+  ------------------------------------------------- */
+  var momentoActual = 0;
+
+  function abrirMomento(idx) {
+    momentoActual = idx;
+    var pagina = document.getElementById('momento-pagina');
+    var foto   = document.getElementById('foto-' + idx);
+    var titulo = document.getElementById('titulo-' + idx);
+    var desc   = document.getElementById('desc-' + idx);
+
+    document.getElementById('mp-foto').src           = foto.src;
+    document.getElementById('mp-titulo-overlay').textContent = titulo.textContent;
+    document.getElementById('mp-desc').textContent   = desc.textContent;
+    document.getElementById('mp-badge').textContent  = 'Momento ' + (idx + 1);
+
+    pagina.classList.remove('saliendo');
+    pagina.classList.add('activo');
+    document.body.style.overflow = 'hidden';
+    pagina.scrollTop = 0;
+  }
+
+  function cerrarMomento() {
+    var pagina = document.getElementById('momento-pagina');
+    pagina.classList.add('saliendo');
+    setTimeout(function() {
+      pagina.classList.remove('activo');
+      pagina.classList.remove('saliendo');
+      document.body.style.overflow = '';
+    }, 350);
+  }
+
+  function triggerUploadDesdeModal() {
+    cerrarMomento();
+    setTimeout(function() { triggerUpload(momentoActual); }, 400);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      cerrarModal();
+      if (document.getElementById('momento-pagina').classList.contains('activo')) {
+        cerrarMomento();
+      }
+    }
+  });
+
+  function cargarFoto(idx, input) {
+    var file = input.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = document.getElementById('foto-' + idx);
+      var placeholder = document.getElementById('placeholder-' + idx);
+      img.style.opacity = '0';
+      img.src = e.target.result;
+      placeholder.classList.add('oculto');
+      // Fade in suave al cargar
+      img.onload = function() {
+        img.style.transition = 'opacity 0.4s ease';
+        img.style.opacity = '1';
+      };
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* -------------------------------------------------
+     4. FRASES — IntersectionObserver
+  ------------------------------------------------- */
+  var obsFrames = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry, i) {
+      if (entry.isIntersecting) {
+        setTimeout(function() { entry.target.classList.add('visible'); }, i * 130);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.frase-card').forEach(function(c) { obsFrames.observe(c); });
+
+  /* -------------------------------------------------
+     5. MODAL
+  ------------------------------------------------- */
+  function abrirModal() {
+    var modal = document.getElementById('modal');
+    modal.classList.add('activo');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function() {
+      document.getElementById('barra-progreso').style.width = '100%';
+    }, 120);
+    lanzarConfeti();
+  }
+
+  function cerrarModal() {
+    document.getElementById('modal').classList.remove('activo');
+    document.body.style.overflow = '';
+    var b = document.getElementById('barra-progreso');
+    b.style.transition = 'none';
+    b.style.width = '0%';
+    setTimeout(function() { b.style.transition = 'width 4s ease'; }, 60);
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModal();
+  });
+
+  /* -------------------------------------------------
+     6. CONFETI
+  ------------------------------------------------- */
+  function lanzarConfeti() {
+    var colores = ['#e50914','#c9a84c','#ff6b9d','#ffffff','#ff9f43','#54a0ff'];
+    var total = 80;
+    for (var i = 0; i < total; i++) {
+      (function(i) {
+        setTimeout(function() {
+          var c = document.createElement('div');
+          c.className = 'confeti';
+          c.style.left   = (Math.random() * 100) + 'vw';
+          c.style.width  = (Math.random() * 8 + 5) + 'px';
+          c.style.height = (Math.random() * 5 + 4) + 'px';
+          c.style.background = colores[Math.floor(Math.random() * colores.length)];
+          c.style.animationDuration = (Math.random() * 2.5 + 2) + 's';
+          c.style.animationDelay = '0s';
+          document.body.appendChild(c);
+          setTimeout(function() { c.remove(); }, 5000);
+        }, i * 25);
+      })(i);
+    }
+  }
+
+  /* -------------------------------------------------
+     7. PÉTALOS
+  ------------------------------------------------- */
+  function crearPetalo() {
+    var p = document.createElement('span');
+    p.className = 'petalo';
+    var emojis = ['🌸','🌹','💕','✨','🌷','💖'];
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    p.style.left = (Math.random() * 100) + 'vw';
+    p.style.top  = '-30px';
+    p.style.fontSize = (Math.random() * 0.7 + 0.6) + 'rem';
+    var dur = Math.random() * 10 + 9;
+    p.style.animationDuration = dur + 's';
+    p.style.animationDelay = (Math.random() * 4) + 's';
+    document.getElementById('petalos').appendChild(p);
+    setTimeout(function() { p.remove(); }, (dur + 5) * 1000);
+  }
+  setInterval(crearPetalo, 3500);
+  for (var pi = 0; pi < 4; pi++) { (function(pi){ setTimeout(crearPetalo, pi * 800); })(pi); }
+
+  /* -------------------------------------------------
+     8. LÍNEA DE TIEMPO CUMPLEAÑOS
+  ------------------------------------------------- */
+  (function construirTimeline() {
+    var anioActual = new Date().getFullYear();
+    var aniosCumple = 28; // ✏️ Cambia por los años que cumple
+    var inicio = anioActual - 2;
+    var tl = document.getElementById('timeline');
+
+    for (var a = inicio; a <= anioActual; a++) {
+      var item = document.createElement('div');
+      item.className = 'tl-item';
+
+      var dot = document.createElement('div');
+      dot.className = 'tl-dot' + (a === anioActual ? ' activo' : ' pasado');
+
+      var anioEl = document.createElement('span');
+      anioEl.className = 'tl-anio' + (a === anioActual ? ' activo' : '');
+      anioEl.textContent = a;
+
+      item.appendChild(dot);
+      item.appendChild(anioEl);
+      tl.appendChild(item);
+
+      if (a < anioActual) {
+        var linea = document.createElement('div');
+        linea.className = 'tl-linea pasada';
+        tl.appendChild(linea);
+      }
+    }
+  })();
+
+  /* -------------------------------------------------
+     9. GLOBITOS EN PANTALLA PERFIL
+  ------------------------------------------------- */
+  function crearGlobito() {
+    var g = document.createElement('span');
+    g.className = 'globito';
+    var emojis = ['🎈','🎂','🎉','🎁','💕'];
+    g.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    g.style.left = (Math.random() * 95) + 'vw';
+    var dur = Math.random() * 5 + 6;
+    g.style.animationDuration = dur + 's';
+    g.style.animationDelay = '0s';
+    document.body.appendChild(g);
+    setTimeout(function() { g.remove(); }, dur * 1000 + 1000);
+  }
+  globInterval = setInterval(crearGlobito, 1200);
+  for (var gi = 0; gi < 5; gi++) { (function(gi){ setTimeout(crearGlobito, gi * 400); })(gi); }
+
+  /* -------------------------------------------------
+     10. MÚSICA
+  ------------------------------------------------- */
+  function toggleMusica() {
+    if (!MUSICA_ACTIVADA || !audioSrc) return;
+    if (!audio) {
+      audio = new Audio(audioSrc);
+      audio.loop = true;
+      audio.volume = 0.3;
+    }
+    if (musicOn) {
+      audio.pause();
+      document.getElementById('musica-btn').textContent = '🎵';
+    } else {
+      audio.play().catch(function(){});
+      document.getElementById('musica-btn').textContent = '🔇';
+    }
+    musicOn = !musicOn;
+  }
+</script>
+
+</body>
+</html>
