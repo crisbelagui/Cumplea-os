@@ -506,6 +506,22 @@
       cursor: pointer; transition: all var(--t);
     }
     .mp-cambiar-foto-btn:hover { border-color: var(--rojo); color: var(--rojo); }
+    .mp-carta-wrap {
+  background: var(--gris-oscuro);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 8px; padding: 2rem;
+  position: relative; overflow: hidden; margin-top: 1.5rem;
+}
+.mp-carta-wrap::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--rojo), var(--dorado), var(--rojo));
+}
+.mp-carta-icono { font-size: 2rem; display: block; text-align: center; margin-bottom: 0.8rem; animation: latir 1.5s ease infinite; }
+.mp-carta-titulo { font-family: var(--font-titulo); font-size: clamp(1rem, 3vw, 1.4rem); text-align: center; color: var(--crema); font-style: italic; margin-bottom: 1.2rem; }
+.mp-carta-cuerpo { font-size: 0.93rem; color: rgba(255,255,255,0.80); line-height: 1.9; }
+.mp-carta-cuerpo p { margin-bottom: 0.9rem; }
+.mp-carta-firma { font-style: italic; font-size: 1rem; color: var(--dorado); text-align: right; margin-top: 1.2rem; }
   </style>
 </head>
 <body>
@@ -586,7 +602,7 @@
     <div class="momento-card" onclick="abrirMomento(0)">
       <div class="momento-foto-wrap">
         <img class="momento-foto" id="foto-0"
-             src="img\foto1.png"
+             src="img\foto1.jpg"
              alt="Momento 1" />
         <div class="momento-placeholder oculto" id="placeholder-0">
           <span class="placeholder-texto">Toca para ver<br>este momento</span>
@@ -603,7 +619,7 @@
     <div class="momento-card" onclick="abrirMomento(1)">
       <div class="momento-foto-wrap">
         <img class="momento-foto" id="foto-1"
-             src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=500&q=80"
+             src="img\foto2.png"
              alt="Momento 2" />
         <div class="momento-placeholder oculto" id="placeholder-1">
           <span class="placeholder-texto">Toca para ver<br>este momento</span>
@@ -620,7 +636,7 @@
     <div class="momento-card" onclick="abrirMomento(2)">
       <div class="momento-foto-wrap">
         <img class="momento-foto" id="foto-2"
-             src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&q=80"
+             src="img\foto3.png"
              alt="Momento 3" />
         <div class="momento-placeholder oculto" id="placeholder-2">
           <span class="placeholder-texto">Toca para ver<br>este momento</span>
@@ -710,11 +726,11 @@
     <div class="carta-cuerpo">
       <p>Hoy es un día especial… no solo porque lo diga el calendario, sino porque el mundo tiene la suerte de celebrar que existes. Y yo tengo la suerte más grande de todas: quererte.</p>
       <p>Hay personas que llegan a tu vida y lo cambian todo sin hacer mucho ruido. Tú fuiste eso para mí. Antes de conocerte, todo era normal… pero contigo todo se siente distinto, más bonito, más real.</p>
-      <p>Me encanta cómo te ríes cuando algo te toma por sorpresa, cómo te concentras cuando algo te importa, y esa forma en la que me miras cuando crees que no me doy cuenta… pero siempre me doy cuenta.</p>
+      <p>Me encanta tu sonrisa, tu risa, cómo te concentras cuando algo te importa, y esa forma en la que me miras me encanta y me encantas.</p>
       <p>En tu cumpleaños solo quiero que seas muy feliz. Verte feliz es lo que más me importa. Y cada año que pasa, siento que aprendo a quererte un poquito mejor.</p>
-      <p>Feliz cumpleaños, mi amor. Esto es solo una parte de todo lo que siento… lo demás lo seguimos escribiendo juntos, día a día. 💙</p>
+      <p>Feliz cumpleaños, mi amor. Esto es solo una parte de todo lo que siento… lo demás lo seguiremos escribiendo juntos, día a día. </p>
     </div>
-    <p class="carta-firma">Con todo mi amor, siempre tuya ❤️</p>
+    <p class="carta-firma">Con todo mi amor ❤️</p>
   </div>
 </section>
 
@@ -746,15 +762,10 @@
 
   <div class="mp-cuerpo">
     <p class="mp-descripcion" id="mp-desc"></p>
-    <div class="mp-detalle-fila">
-      <span class="mp-chip">📅 <span>Nuestro recuerdo especial</span></span>
-      <span class="mp-chip">❤️ <span>Para siempre</span></span>
-      <span class="mp-chip">✨ <span>Momento único</span></span>
-    </div>
-    <button class="mp-cambiar-foto-btn" onclick="triggerUploadDesdeModal()">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-2 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-      Cambiar foto de este momento
-    </button>
+    <div class="mp-carta-wrap">
+  <div class="mp-carta-cuerpo" id="mp-carta-cuerpo"></div>
+  <p class="mp-carta-firma">Con todo mi amor ❤️</p>
+</div>
   </div>
 </div>
 
@@ -777,8 +788,6 @@
   </div>
 </div>
 
-<!-- BOTÓN MÚSICA -->
-<button id="musica-btn" onclick="toggleMusica()" title="Música">🎵</button>
 
 <!-- Contenedor pétalos -->
 <div id="petalos"></div>
@@ -852,7 +861,40 @@
     pagina.classList.add('activo');
     document.body.style.overflow = 'hidden';
     pagina.scrollTop = 0;
+    // Inyectar carta
+document.getElementById('mp-carta-cuerpo').innerHTML = momentosData[idx].carta;
   }
+
+var momentosData = [
+  {
+    carta: `<p>Cada momento contigo se ha vuelto un recuerdo que guardo con muchísimo 
+      cariño, porque incluso lo más simple a tu lado se siente especial y diferente. 
+      Desde una conversación de todos los dias hasta esos momentos en los que estamos juntitos, 
+      todo tiene sentido cuando estoy contigo. A veces me pongo a pensar en todo lo que 
+      hemos vivido y me doy cuenta de lo mucho que significan para mí esos momentos. Porque no son 
+      solo recuerdos, son partes de mi vida que me hacen sonreír, y la verdad no cambiaría nada de 
+      lo que hemos compartido</p>`
+  },
+  {
+    carta: `<p>Hay tantas cosas que amo de ti que podría pasar horas intentando explicarlas, 
+      pero creo que lo más importante es la forma en que haces que todo se sienta más 
+      bonito sin siquiera intentarlo. Tu manera de ser, tu forma de hablar y el como me tratas
+      hacen que seas alguien demasiado especial para mí. Pero sobre todo, amo 
+      cómo me haces sentir cuando estoy contigo, esa tranquilidad, esa confianza 
+      y esa felicidad que aparecen sin darme cuenta. Contigo puedo ser yo misma, 
+      y eso es algo que valoro más de lo que imaginas</p>`
+  },
+  {
+    carta: `<p>Hoy en tu cumpleaños deseo de todo corazón que la vida te regale 
+      cosas hermosas, que cada día esté lleno de motivos para sonreír 
+      y que nunca te falten sueños por cumplir. Quiero que todo lo que te
+       propongas lo logres, porque realmente tienes todo para hacerlo.
+       Y más que nada, deseo que seas feliz, no solo hoy sino siempre.
+       Sabes que siempre estaré aqui para apoyarte en cada paso que des, y que mi mayor deseo es verte sonreír
+        Ojalá la vida me permita seguir estando a tu lado para ver todo 
+        lo bonito que te espera. Te amo muchooo</p>`
+  }
+];
 
   function cerrarMomento() {
     var pagina = document.getElementById('momento-pagina');
